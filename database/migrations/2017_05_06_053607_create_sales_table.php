@@ -16,13 +16,13 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('value');
-            $table->float('comission_pct', 5, 2);
+            $table->float('commission_pct', 5, 2);
             $table->timestamps();
 
-            $table->unsignedInteger('salesman_id');
-            $table->foreign('salesman_id')
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('salesmen');
+                ->on('users');
         });
     }
 

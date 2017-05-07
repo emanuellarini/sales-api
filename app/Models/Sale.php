@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Salesman;
+use App\Models\User;
 
 class Sale extends Model
 {
@@ -17,10 +17,10 @@ class Sale extends Model
     ];
 
     /**
-     * Get the salesman who did the sale.
+     * Get the user who did the sale.
      */
-    public function salesman()
+    public function user()
     {
-        return $this->belongsTo(Salesman::class);
+        return $this->belongsTo(User::class);
     }
 }
