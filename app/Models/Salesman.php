@@ -14,7 +14,7 @@ class Salesman extends Model
      * @var array
      */
     protected $fillable = [
-        'comission'
+        'commission'
     ];
 
     /**
