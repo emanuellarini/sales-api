@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             ->each(function ($salesman) {
                 factory(User::class)->create([
                     'userable_id' => $salesman->id,
-                    'userable_type' => Salesman::class
+                    'userable_type' => 'salesman'
                 ]);
             });
         factory(Sale::class, 10)->create();
