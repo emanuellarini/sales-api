@@ -15,15 +15,17 @@ use App\Models\User;
 |
 */
 
+$factory->define(Salesman::class, function (Faker\Generator $faker) {
+    return [
+        'commission' => 0
+    ];
+});
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(User::class, function (Faker\Generator $faker) {
-    $salesman = Salesman::create();
-
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'userable_id' => $salesman->id,
-        'userable_type' => Salesman::class,
+        'email' => $faker->unique()->safeEmail
     ];
 });
 

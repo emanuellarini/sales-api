@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Sale;
+use App\Models\Salesman;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 5)->create();
-        factory(Sale::class, 15)->create();
+        factory(Salesman::class, 5)
+            ->create()
+            ->each(function ($salesman) {
+                factory(User::class)->create([
+                    'userable_id' => $salesman->id,
+                    'userable_type' => Salesman::class
+                ]);
+            });
+        factory(Sale::class, 10)->create();
     }
 }
