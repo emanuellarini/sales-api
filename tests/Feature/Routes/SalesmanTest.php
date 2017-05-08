@@ -7,10 +7,6 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\User;
-use App\Models\Sale;
-use App\Models\Salesman;
-use App\Transformers\SalesmanTransformer;
-use League\Fractal\Resource\Item;
 
 class SalesmanTest extends TestCase
 {
@@ -24,11 +20,7 @@ class SalesmanTest extends TestCase
      */
     public function testIndex()
     {
-        $salesman = factory(Salesman::class)->create();
-        factory(User::class)->create([
-            'userable_id' => $salesman->id,
-            'userable_type' => 'salesman'
-        ]);
+        $user = factory(User::class)->states('salesman')->create();
 
         $response = $this->json('GET', '/api/vendedores');
 
@@ -41,8 +33,8 @@ class SalesmanTest extends TestCase
                  ]
              ])
             ->assertJsonFragment([
-                'name' => $salesman->user->name,
-                'email' => $salesman->user->email,
+                'name' => $user->name,
+                'email' => $user->email,
             ]);
     }
 
