@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Salesman;
 use App\Repositories\Salesman\SalesmanRepository;
 use App\Transformers\SalesmanTransformer;
 use App\Transformers\UserTransformer;
