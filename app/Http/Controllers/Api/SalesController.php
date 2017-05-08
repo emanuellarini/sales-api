@@ -28,7 +28,7 @@ class SalesController extends Controller
      * Display a salesman's listing of Sales.
      *
      *
-     * @Post("/vendas")
+     * @Post("/")
      * @Versions({"v1"})
      * @Parameter("vendedor", description="The ID of a salesman.")
      * @Transaction({
@@ -65,7 +65,7 @@ class SalesController extends Controller
     /**
      * Store a Saleman's new Sale.
      *
-     * @Post("/vendas")
+     * @Post("/")
      * @Versions({"v1"})
      * @Transaction({
      *      @Request({"vendedor": 1, "valor": 100}),

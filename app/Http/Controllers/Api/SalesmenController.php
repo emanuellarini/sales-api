@@ -25,7 +25,7 @@ class SalesmenController extends Controller
     /**
      * Display a listing of Salesmen.
      *
-     * @Get("/vendedores")
+     * @Get("/")
      * @Versions({"v1"})
      * @Transaction({
      *      @Response(200, body={{"id": 1, "name": "Dummy", "email": "dummy@dummy.com.br", "commission": "R$ 1.110,00"}}),
@@ -49,7 +49,7 @@ class SalesmenController extends Controller
     /**
      * Store a new Salesmen.
      *
-     * @Post("/vendedores")
+     * @Post("/")
      * @Versions({"v1"})
      * @Transaction({
      *      @Request({"name": "Dummy", "email": "dummy@dummy.com.br"}),
