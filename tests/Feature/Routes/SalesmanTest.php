@@ -30,7 +30,7 @@ class SalesmanTest extends TestCase
             'userable_type' => 'salesman'
         ]);
 
-        $response = $this->get('api/vendedores');
+        $response = $this->json('GET', '/api/vendedores');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -54,7 +54,7 @@ class SalesmanTest extends TestCase
     public function testStore()
     {
         $data = ['name' => 'John Doe', 'email' => 'john_doe@test.com.br'];
-        $response = $this->post('api/vendedores', $data);
+        $response = $this->json('POST', 'api/vendedores', $data);
 
         $response->assertStatus(200)
             ->assertJson([ 'data' => $data ]);
