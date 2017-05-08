@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Salesman;
+use App\Repositories\Salesman\SalesmanRepository;
 use App\Transformers\SalesmanTransformer;
 use App\Transformers\UserTransformer;
+use DB;
 
 /**
  * Salesman resource representation.
@@ -15,6 +17,12 @@ use App\Transformers\UserTransformer;
  */
 class SalesmenController extends Controller
 {
+    private $salesmen;
+    public function __construct(SalesmanRepository $salesmen)
+    {
+        $this->salesmen = $salesmen;
+    }
+
     /**
      * Display a listing of Salesmen.
      *
@@ -22,13 +30,13 @@ class SalesmenController extends Controller
      * @Versions({"v1"})
      * @Transaction({
      *      @Response(200, body={{"id": 1, "name": "Dummy", "email": "dummy@dummy.com.br", "commission": "R$ 1.110,00"}}),
-     *      @Response(422, body={"error": "Error while fetching records."})
+     *      @Response(422, body={"message": "Error while fetching records."})
      * })
      */
     public function index()
     {
         try {
-            $salesmen = Salesman::with('user')->get();
+            $salesmen = $this->salesmen->getAllWithUser();
         } catch(\Exception $e) {
             throw new \Dingo\Api\Exception\ResourceException('Error while fetching records.');
         }
@@ -47,7 +55,7 @@ class SalesmenController extends Controller
      * @Transaction({
      *      @Request({"name": "Dummy", "email": "dummy@dummy.com.br"}),
      *      @Response(200, body={"id": 1, "name": "Dummy", "email": "dummy@dummy.com.br"}),
-     *      @Response(422, body={"error": "Error while creating a Salesman."})
+     *      @Response(422, body={"message": "Error while creating a Salesman."})
      * })
      */
     public function store()
@@ -65,8 +73,16 @@ class SalesmenController extends Controller
             throw new \Dingo\Api\Exception\StoreResourceFailedException('Error while creating a Salesman.', $validator->errors());
         }
 
-        $salesman = Salesman::create();
-        $salesman->user()->create($request->all());
+        DB::beginTransaction();
+        try {
+            $salesman = $this->salesmen->createWithUser($payload);
+            DB::commit();
+        } catch (\Illuminate\Database\QueryException $e) {
+            DB::rollback();
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('Error while creating record.');
+        } catch (\Exception $e) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('Error while creating record.');
+        }
 
         return $this->response
             ->item($salesman->user, new UserTransformer)
