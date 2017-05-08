@@ -11,6 +11,9 @@ use App\Repositories\Salesman\CachingSalesmanRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\EloquentUserRepository;
 use App\Repositories\User\CachingUserRepository;
+use App\Repositories\Sale\SaleRepository;
+use App\Repositories\Sale\EloquentSaleRepository;
+use App\Repositories\Sale\CachingSaleRepository;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -43,6 +46,12 @@ class DatabaseServiceProvider extends ServiceProvider
             $baseRepo = new EloquentUserRepository;
             $cacheRepo = $this->app['cache.store'];
             return new CachingUserRepository($baseRepo, $cacheRepo);
+        });
+
+        $this->app->singleton(SaleRepository::class, function () {
+            $baseRepo = new EloquentSaleRepository;
+            $cacheRepo = $this->app['cache.store'];
+            return new CachingSaleRepository($baseRepo, $cacheRepo);
         });
     }
 }

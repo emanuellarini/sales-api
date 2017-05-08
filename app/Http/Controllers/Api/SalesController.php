@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Sale;
 use App\Repositories\User\UserRepository;
+use App\Repositories\Sale\SaleRepository;
 use App\Transformers\SaleTransformer;
 use DB;
 
@@ -17,9 +17,11 @@ use DB;
 class SalesController extends Controller
 {
     private $users;
-    public function __construct(UserRepository $users)
+    private $sales;
+    public function __construct(UserRepository $users, SaleRepository $sales)
     {
         $this->users = $users;
+        $this->sales = $sales;
     }
 
     /**
@@ -49,7 +51,7 @@ class SalesController extends Controller
         }
 
         try {
-            $sales = Sale::where('user_id', $payload['vendedor'])->get();
+            $sales = $this->sales->findByUser($payload['vendedor']);
         } catch (\Exception $e) {
             throw new \Dingo\Api\Exception\ResourceException('Error while fetching records.');
         }
@@ -99,7 +101,7 @@ class SalesController extends Controller
 
         DB::beginTransaction();
         try {
-            $sale = Sale::create($data);
+            $sale = $this->sales->create($data);
             $this->users->storeUserableCommission($user, $sale);
             DB::commit();
         } catch (\Illuminate\Database\QueryException $e) {

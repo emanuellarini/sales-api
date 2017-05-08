@@ -9,12 +9,12 @@ class EloquentUserRepository implements UserRepository
 {
     public function findById($id)
     {
-        return User::find($payload['vendedor']);
+        return User::find($id);
     }
 
     public function storeUserableCommission(User $user, Sale $sale)
     {
-        $user->userable->commission = $user->userable->commission + $sale->commission;
+        $user->userable->commission = ($user->userable->commission + $sale->commission) * 100;
         $user->userable->save();
 
         return $user;

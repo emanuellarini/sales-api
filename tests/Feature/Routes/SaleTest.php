@@ -20,11 +20,7 @@ class SaleTest extends TestCase
     {
         parent::setUp();
 
-        $this->salesman = factory(Salesman::class)->create();
-        $this->user = factory(User::class)->create([
-            'userable_id' => $this->salesman->id,
-            'userable_type' => 'salesman'
-        ]);
+        $this->user = factory(User::class)->states('salesman')->create();
         $this->sales = factory(Sale::class, 2)->create();
     }
 
@@ -35,7 +31,7 @@ class SaleTest extends TestCase
      */
     public function testIndex()
     {
-        $response = $this->json('GET', '/api/vendas', ['vendedor' => $this->user->id  ]);
+        $response = $this->json('GET', '/api/vendas', [ 'vendedor' => $this->user->id  ]);
 
         $response->assertStatus(200)
             ->assertJsonStructure([
