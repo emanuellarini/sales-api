@@ -12,7 +12,7 @@ use DB;
 /**
  * Salesman resource representation.
  *
- * @Resource("Salesmen", uri="/vendedores")
+ * @Resource("Salesmen", uri="/api/vendedores")
  */
 class SalesmenController extends Controller
 {

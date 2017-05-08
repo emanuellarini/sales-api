@@ -2,10 +2,10 @@ FORMAT: 1A
 
 # Document
 
-# Salesmen [/vendedores]
+# Salesmen [/api/vendedores]
 Salesman resource representation.
 
-## Display a listing of Salesmen. [GET /vendedores]
+## Display a listing of Salesmen. [GET /api/vendedores]
 
 
 + Response 200 (application/json)
@@ -27,7 +27,7 @@ Salesman resource representation.
                 "message": "Error while fetching records."
             }
 
-## Store a new Salesmen. [POST /vendedores]
+## Store a new Salesmen. [POST /api/vendedores]
 
 
 + Request (application/json)
@@ -54,10 +54,10 @@ Salesman resource representation.
                 "message": "Error while creating a Salesman."
             }
 
-# Sales [/vendas]
+# Sales [/api/vendas]
 Sale resource representation.
 
-## Display a salesman's listing of Sales. [POST /vendas]
+## Display a salesman's listing of Sales. [POST /api/vendas]
 
 
 + Response 200 (application/json)
@@ -83,7 +83,7 @@ Sale resource representation.
                 ]
             }
 
-## Store a Saleman's new Sale. [POST /vendas]
+## Store a Saleman's new Sale. [POST /api/vendas]
 
 
 + Request (application/json)
