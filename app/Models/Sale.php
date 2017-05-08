@@ -13,7 +13,13 @@ class Sale extends Model
      * @var array
      */
     protected $fillable = [
-        'amount', 'comission_pct'
+        'amount', 'comission_pct', 'user_id'
+    ];
+
+    const COMISSION_PCT = 8.5;
+
+    protected $attributes = [
+      'commission_pct' => self::COMISSION_PCT
     ];
 
     /**

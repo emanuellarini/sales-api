@@ -17,3 +17,4 @@ $api->get('vendedores', 'App\Http\Controllers\Api\SalesmenController@index');
 $api->post('vendedores', 'App\Http\Controllers\Api\SalesmenController@store');
 
 $api->get('vendas', 'App\Http\Controllers\Api\SalesController@index');
+$api->post('vendas', 'App\Http\Controllers\Api\SalesController@store');
