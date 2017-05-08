@@ -13,7 +13,7 @@ class SalesmanTransformer extends TransformerAbstract
             'id' => $salesman->id,
             'name' => $salesman->user->name,
             'email' => $salesman->user->email,
-            'commission' => 'R$ ' . number_format($salesman->commission, 2, ',', '.'),
+            'commission' => 'R$ ' . number_format(($salesman->commission / 100), 2, ',', '.'),
         ];
     }
 }
