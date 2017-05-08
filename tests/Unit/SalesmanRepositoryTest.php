@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Repositories\Decorators\CachingUserRepository;
 use Mockery as m;
 use App\Repositories\Salesman\CachingSalesmanRepository;
 use App\Repositories\Salesman\SalesmanRepository;

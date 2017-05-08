@@ -54,7 +54,7 @@ class Sale extends Model
      */
     public function getCommissionAttribute()
     {
-        return round($this->amount * $this->commission_pct, 2);
+        return round($this->amount * $this->commission_pct);
     }
 
     /**

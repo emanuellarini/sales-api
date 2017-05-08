@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Sale;
-use App\Models\User;
+use App\Repositories\User\UserRepository;
 use App\Transformers\SaleTransformer;
 use DB;
 
@@ -16,6 +16,11 @@ use DB;
  */
 class SalesController extends Controller
 {
+    private $users;
+    public function __construct(UserRepository $users)
+    {
+        $this->users = $users;
+    }
 
     /**
      * Display a salesman's listing of Sales.
@@ -44,7 +49,7 @@ class SalesController extends Controller
         }
 
         try {
-            $sales = User::find($payload['vendedor'])->sales()->get();
+            $sales = Sale::where('user_id', $payload['vendedor'])->get();
         } catch (\Exception $e) {
             throw new \Dingo\Api\Exception\ResourceException('Error while fetching records.');
         }
@@ -81,7 +86,7 @@ class SalesController extends Controller
             throw new \Dingo\Api\Exception\StoreResourceFailedException('Error while fetching records.', $validator->errors());
         }
 
-        $user = User::find($payload['vendedor']);
+        $user = $this->users->findById($payload['vendedor']);
 
         if (!$user) {
             throw new \Dingo\Api\Exception\StoreResourceFailedException('Salesman does not exist.');
@@ -89,13 +94,13 @@ class SalesController extends Controller
 
         $data = [
             'amount' => round($payload['valor'] * 100),
+            'user_id' => $user->id,
         ];
 
         DB::beginTransaction();
         try {
-                $sale = $user->sales()->create($data);
-                $user->userable->commission = $user->userable->commission + ($sale->amount * ($sale->commission_pct/100));
-                $user->userable->save();
+            $sale = Sale::create($data);
+            $this->users->storeUserableCommission($user, $sale);
             DB::commit();
         } catch (\Illuminate\Database\QueryException $e) {
             DB::rollback();
