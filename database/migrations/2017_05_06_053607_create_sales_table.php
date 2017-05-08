@@ -15,7 +15,7 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('value');
+            $table->unsignedInteger('amount');
             $table->float('commission_pct', 5, 2);
             $table->timestamps();
 

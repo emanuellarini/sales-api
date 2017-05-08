@@ -13,7 +13,7 @@ class Sale extends Model
      * @var array
      */
     protected $fillable = [
-        'value', 'comission_pct'
+        'amount', 'comission_pct'
     ];
 
     /**
