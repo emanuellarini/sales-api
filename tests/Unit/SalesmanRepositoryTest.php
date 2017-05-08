@@ -38,7 +38,7 @@ class SalesmanRepositoryTest extends TestCase
      *
      * @return void
      */
-    public function testFetchingAll()
+    public function testFetchingAllWithUser()
     {
         // Create mock of decorated repository
         $this->repo->shouldReceive('getAllWithUser')->andReturn($this->salemen);
@@ -61,7 +61,7 @@ class SalesmanRepositoryTest extends TestCase
      *
      * @return void
      */
-    public function testCreate()
+    public function testCreatingWithUser()
     {
         $data = ['name' => 'John Doe', 'email' => 'john_doe@test.com.br'];
 
