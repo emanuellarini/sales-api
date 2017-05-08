@@ -31,7 +31,7 @@ class SalesController extends Controller
         }
 
         try {
-            $sales = Sale::where('user_id', $payload['vendedor'])->get();
+            $sales = User::find($payload['vendedor'])->sales()->get();
         } catch (\Exception $e) {
             throw new \Dingo\Api\Exception\ResourceException('Error while fetching records.');
         }
@@ -69,13 +69,12 @@ class SalesController extends Controller
         }
 
         $data = [
-            'user_id' => $user->id,
             'amount' => round($payload['valor'] * 100),
         ];
 
         DB::beginTransaction();
         try {
-                $sale = Sale::create($data);
+                $sale = $user->sales()->create($data);
                 $user->userable->commission = $user->userable->commission + ($sale->amount * ($sale->commission_pct/100));
                 $user->userable->save();
             DB::commit();

@@ -15,11 +15,19 @@ class User extends Model
         'name', 'email',
     ];
 
-      /**
+    /**
      * Get all of the owning userable models.
      */
     public function userable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Get all sales of the user.
+     */
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
     }
 }
