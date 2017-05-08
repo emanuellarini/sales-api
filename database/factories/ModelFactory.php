@@ -25,7 +25,16 @@ $factory->define(Salesman::class, function (Faker\Generator $faker) {
 $factory->define(User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail
+        'email' => $faker->unique()->safeEmail,
+    ];
+});
+
+$factory->state(User::class, 'salesman', function (Faker\Generator $faker) {
+    $salesman = factory(Salesman::class)->create();
+
+    return [
+        'userable_id' => $salesman->id,
+        'userable_type' => 'salesman',
     ];
 });
 
