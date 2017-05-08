@@ -20,6 +20,7 @@ class SendDailySalesEmailTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        cache()->flush();
         factory(User::class)->states('salesman')->create();
         factory(Sale::class)->create();
     }

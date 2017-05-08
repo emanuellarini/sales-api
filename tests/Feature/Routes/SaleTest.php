@@ -19,7 +19,7 @@ class SaleTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
+        cache()->flush();
         $this->user = factory(User::class)->states('salesman')->create();
         $this->sales = factory(Sale::class, 2)->create();
     }

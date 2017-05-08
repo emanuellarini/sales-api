@@ -13,6 +13,12 @@ class SalesmanTest extends TestCase
     use DatabaseMigrations;
     use DatabaseTransactions;
 
+    public function setUp()
+    {
+        parent::setUp();
+        cache()->flush();
+    }
+
     /**
      * Test /api/vendores index route.
      *
