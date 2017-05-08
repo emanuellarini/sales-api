@@ -56,6 +56,8 @@ class SalesmanTest extends TestCase
         $data = ['name' => 'John Doe', 'email' => 'john_doe@test.com.br'];
         $response = $this->json('POST', 'api/vendedores', $data);
 
+        $this->assertDatabaseHas('users', $data);
+
         $response->assertStatus(200)
             ->assertJson([ 'data' => $data ]);
     }
