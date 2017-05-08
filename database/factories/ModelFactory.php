@@ -39,16 +39,17 @@ $factory->state(User::class, 'salesman', function (Faker\Generator $faker) {
 });
 
 $factory->define(Sale::class, function (Faker\Generator $faker) {
-    $amount = $faker->numberBetween(1000, 1000000);
+    $amount = $faker->numberBetween(10000, 1000000);
     $pct = 0.085;
+    $commission = (int) round($amount * $pct);
 
-    $user = User::where('userable_type', 'salesman')->inRandomOrder()->first();
-    $user->userable->commission = $user->userable->commission + ($amount * $pct ) ;
-    $user->userable->save();
+    $salesman = Salesman::inRandomOrder()->first();
+    $salesman->commission = ($salesman->commission * 100) + $commission;
+    $salesman->save();
 
     return [
         'amount' => $amount,
         'commission_pct' => $pct,
-        'user_id' => $user->id,
+        'user_id' => $salesman->user->id,
     ];
 });

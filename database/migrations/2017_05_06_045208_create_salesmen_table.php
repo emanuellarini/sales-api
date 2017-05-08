@@ -15,7 +15,7 @@ class CreateSalesmenTable extends Migration
     {
         Schema::create('salesmen', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('commission', 16, 2)->default(0);
+            $table->unsignedInteger('commission')->default(0);
             $table->timestamps();
         });
     }

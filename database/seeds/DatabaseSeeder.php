@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         factory(User::class, 5)->states('salesman')->create();
-        factory(Sale::class, 10)->create();
+        factory(Sale::class, 15)->create();
     }
 }
