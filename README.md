@@ -25,9 +25,9 @@ git clone https://github.com/emanuellarini/sales-api.git
 ```
 composer install
 ```
-3. Create a .env file from .env.example:
+3. Create a .env file from .env.example and generate key:
 ```
-cp .env.example .env
+cp .env.example .env && php artisan key:generate
 ```
 4. Create your local database
 5. Change .env to your database connection settings and mail settings
@@ -41,7 +41,7 @@ phpunit
 ```
 8. Run command to send daily sales report (check your mailtrap inbox!):
 ```
-php artisan email:daily-sales
+php artisan email:daily-sales && php artisan queue:work
 ```
 9. Wanna log queries?
 ```
