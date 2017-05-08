@@ -48,7 +48,7 @@ $factory->define(Sale::class, function (Faker\Generator $faker) {
 
     return [
         'amount' => $amount,
-        'commission_pct' => $pct * 100,
+        'commission_pct' => $pct,
         'user_id' => $user->id,
     ];
 });

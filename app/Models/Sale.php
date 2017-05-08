@@ -7,6 +7,8 @@ use App\Models\User;
 
 class Sale extends Model
 {
+    const COMISSION_PCT = 0.085;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,11 +18,44 @@ class Sale extends Model
         'amount', 'comission_pct', 'user_id'
     ];
 
-    const COMISSION_PCT = 8.5;
-
+    /**
+     * The default attributes.
+     *
+     * @var array
+     */
     protected $attributes = [
       'commission_pct' => self::COMISSION_PCT
     ];
+
+    /**
+     * The appended attributes.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'commission'
+    ];
+
+    /**
+     * Get the sale's amount.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getAmountAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    /**
+     * Get the sale's comission.
+     *
+     * @return string
+     */
+    public function getCommissionAttribute()
+    {
+        return round($this->amount * $this->commission_pct, 2);
+    }
 
     /**
      * Get the user who did the sale.
