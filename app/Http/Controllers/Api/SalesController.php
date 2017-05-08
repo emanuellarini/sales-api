@@ -9,14 +9,27 @@ use App\Models\User;
 use App\Transformers\SaleTransformer;
 use DB;
 
+/**
+ * Sale resource representation.
+ *
+ * @Resource("Sales", uri="/vendas")
+ */
 class SalesController extends Controller
 {
+
     /**
      * Display a salesman's listing of Sales.
      *
-     * @return \Illuminate\Http\Response
+     *
+     * @Post("/vendas")
+     * @Versions({"v1"})
+     * @Parameter("vendedor", description="The ID of a salesman.")
+     * @Transaction({
+     *      @Response(200, body={{"id": 1, "name": "Dummy", "email": "dummy@dummy.com.br", "amount": "R$ 100,00", "commission": "R$ 8,50", "date": "15/01/2017 22:10:00"}}),
+     *      @Response(422, body={"error": {"Error while fetching records."}})
+     * })
      */
-    public function index(Request $request)
+    public function index()
     {
         $rules = [
             'vendedor' => ['required', 'integer'],
@@ -45,7 +58,13 @@ class SalesController extends Controller
     /**
      * Store a Saleman's new Sale.
      *
-     * @return \Illuminate\Http\Response
+     * @Post("/vendas")
+     * @Versions({"v1"})
+     * @Transaction({
+     *      @Request({"vendedor": 1, "valor": 100}),
+     *      @Response(200, body={"id": 1, "name": "Dummy", "email": "dummy@dummy.com.br", "amount": "R$ 100,00", "commission": "R$ 8,50", "date": "15/01/2017 22:10:00"}),
+     *      @Response(422, body={"error": "Error while fetching records."})
+     * })
      */
     public function store()
     {
