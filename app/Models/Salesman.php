@@ -17,6 +17,18 @@ class Salesman extends Model
         'commission'
     ];
 
+
+     /**
+     * Get the saleman's comission.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getCommissionAttribute($value)
+    {
+        return round(($value / 100), 2);
+    }
+
     /**
      * Get the salesman user.
      */
