@@ -13,7 +13,7 @@
 * Migrations, Factories and Seeds
 * Transformers, Repositories and Decorators
 * Dependency Injection and Inversion of Control
-* Generated API Docs [a relative link](Document.md)
+* Generated API Docs [Link](Document.md)
 * Unit (using Mockery) and Feature Tests
 
 
